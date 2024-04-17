@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 	} else {
 		   // We're in parent
 		   wait(&status_code);
-		   exit(status_code);
+		   exit(WEXITSTATUS(status_code));
 		   //printf("Child terminated");
 	}
 
