@@ -7,6 +7,8 @@
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include "util.h"
+#define _GNU_SOURCE
+#include <sched.h>
 
 // Usage: your_docker.sh run <image> <command> <arg1> <arg2> ...
 int main(int argc, char *argv[]) {
@@ -20,6 +22,10 @@ int main(int argc, char *argv[]) {
 	//
 	char *command = argv[3];
 	int status_code = 0;
+	if(unshare(CLONE_NEWPID) == -1) {
+	    printf("unshare");
+	    return 1;
+	}
 	int child_pid = fork();
 	if (child_pid == -1) {
 	    printf("Error forking!");
